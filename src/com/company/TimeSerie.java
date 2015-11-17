@@ -2,9 +2,6 @@ package com.company;
 
 import java.util.ArrayList;
 
-/**
- * Created by Marcio on 17/11/2015.
- */
 public class TimeSerie {
     ArrayList<Double> values;
     int classNumber;
