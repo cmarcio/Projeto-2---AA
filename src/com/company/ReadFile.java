@@ -25,11 +25,14 @@ public class ReadFile {
     public TimeSerie nextSerie() {
         String line = fileReader.nextLine();
         String[] lines = line.split(" ");
-        TimeSerie t = new TimeSerie(String.lines[0]);
+        TimeSerie t = new TimeSerie(Integer.valueOf(lines[0]));
         for (int i = 1; i < lines.length; i++) {
-
+            t.addValue(Double.valueOf(lines[i]));
         }
-        return null;
+        return t;
     }
 
+    public boolean hasNextLine(){
+        return fileReader.hasNextLine();
+    }
 }
