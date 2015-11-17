@@ -9,7 +9,7 @@ public class Main {
         ReadFile trainingFile = new ReadFile("input/treino.txt");
         ReadFile testFile = new ReadFile("input/teste.txt");
 
-        // Guarda as séries temporais do arquivo de treino em uma lista
+        // Guarda as series temporais do arquivo de treino em uma lista
         ArrayList<TimeSerie> training = new ArrayList<>();
         while(trainingFile.hasNextLine()) {
             training.add(trainingFile.nextSerie());
