@@ -3,12 +3,15 @@ package com.company;
 import java.util.ArrayList;
 
 public class TimeSerie {
-    ArrayList<Double> values;
-    int classNumber;
+    private ArrayList<Double> values;
+    private int classNumber;
+    private int closest_serie;
+    private double distance;
 
     public TimeSerie(int classNumber) {
         this.classNumber = classNumber;
         values = new ArrayList<>();
+        distance = Integer.MAX_VALUE;
     }
 
     public void addValue(double value) {
@@ -21,5 +24,12 @@ public class TimeSerie {
 
     public int getClassNumber() {
         return classNumber;
+    }
+
+    public int getSizeSerie() { return values.size(); }
+
+    public void classify(int serie, double distance){
+        if (distance < this.distance)
+            closest_serie = serie;
     }
 }
