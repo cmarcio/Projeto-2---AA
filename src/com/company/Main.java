@@ -16,14 +16,24 @@ public class Main {
             training.add(trainingFile.nextSerie());
         }
 
+        int size = training.size();
         int i = 0;
+        int acertos = 0;
         ArrayList<TimeSerie> test = new ArrayList<>();
         // Processa cada linha do arquivo de teste e contabiliza um acerto ou erro
         while(testFile.hasNextLine()) {
             test.add(testFile.nextSerie());
-            double newDistance = distancesCalculator.DTWDistance(test.get(i), training.get(i));
-            test.get(i).classify(i, newDistance);
+            int j = 0;
+            while (j < size) {
+                double newDistance = distancesCalculator.DTWDistance(test.get(i), training.get(j));
+                test.get(i).classify(j, newDistance);
+                j++;
+            }
+            if (test.get(i).getClassNumber() == training.get(test.get(i).getClosest_serie()).getClassNumber())
+                acertos++;
             i++;
         }
+        System.out.println(i);
+        System.out.println(acertos);
     }
 }
