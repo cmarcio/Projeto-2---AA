@@ -2,15 +2,19 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.DoubleSummaryStatistics;
 
 
 public class TimeSerie {
     ArrayList<Double> values;
     int classNumber;
+    TimeSerie closestSerie;
+    double distance;
 
     public TimeSerie(int classNumber) {
         this.classNumber = classNumber;
         values = new ArrayList<>();
+        distance = Double.MAX_VALUE;
     }
 
     public void addValue(double value) {
@@ -34,7 +38,7 @@ public class TimeSerie {
         for (int i = 1; i < n; i++)
             dtw[i][0] = Double.MAX_VALUE;
         for (int i = 1; i < m; i++)
-            dtw[m][1] = Double.MAX_VALUE;
+            dtw[0][i] = Double.MAX_VALUE;
         dtw[0][0] = 0;
 
         for (int i = 1; i < n; i++) {
@@ -43,23 +47,23 @@ public class TimeSerie {
                 dtw[i][j] = cost + Math.min(dtw[i - 1][j], Math.min(dtw[i][j - 1], dtw[i - 1][j - 1]));
             }
         }
-        return dtw[n][m];
+
+        // Verifica se a série a série testada é a mais próxima
+        classify(dtw[n-1][m-1], serie);
+
+        return dtw[n-1][m-1];
     }
-        /*int DTWDistance(s: array [1..n], t: array [1..m]) {
-            DTW := array [0..n, 0..m]
 
-            for i := 1 to n
-                DTW[i, 0] := infinity
-            for i := 1 to m
-                DTW[0, i] := infinity
-            DTW[0, 0] := 0
+    private void classify(double distance, TimeSerie serieT) {
+        if (distance < this.distance) {
+            this.closestSerie = serieT;
+            this.distance = distance;
+        }
+    }
 
-            for i := 1 to n
-                for j := 1 to m
-                    cost:= d(s[i], t[j])
-                    DTW[i, j] := cost + minimum(DTW[i-1, j  ],    // insertion
-                                            DTW[i  , j-1],    // deletion
-                                            DTW[i-1, j-1])    // match
-
-            return DTW[n, m]*/
+    public boolean isClassificationRight(){
+        if (classNumber == closestSerie.getClassNumber())
+            return true;
+        else return false;
+    }
 }
