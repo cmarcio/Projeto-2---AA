@@ -33,7 +33,5 @@ public class Main {
                 acertos++;
             i++;
         }
-        System.out.println(i);
-        System.out.println(acertos);
     }
 }
