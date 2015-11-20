@@ -54,6 +54,43 @@ public class TimeSerie {
         return dtw[n-1][m-1];
     }
 
+    public double dtwOptimized(TimeSerie serie, int w){
+        int n = this.values.size();
+        int m = serie.values.size();
+
+        w = Math.max(w, Math.abs(n-m)+1); // adapt window size (*)
+
+        double[][] dtw = new double[n][m];
+        //int [][] matrix = new int[n][m];
+
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j < m; j++) {
+                //matrix[i][j] = 0;
+                dtw[i][j] = Double.MAX_VALUE;
+            }
+        dtw[0][0] = 0;
+
+        for (int i = 1; i < n; i++) {
+            for (int j = Math.max(1, i-w); j < Math.min(m, i+w); j++) {
+                //matrix[i][j] = 1;
+                double cost = Math.abs(this.values.get(i) - serie.values.get(j));
+                dtw[i][j] = cost + Math.min(dtw[i - 1][j], Math.min(dtw[i][j - 1], dtw[i - 1][j - 1]));
+            }
+        }
+
+        /*for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++)
+                System.out.print(matrix[i][j]);
+            System.out.print("\n");
+        }
+        System.out.println("--------------------------------------------------------------");*/
+
+        // Verifica se a série a série testada é a mais próxima
+        classify(dtw[n-1][m-1], serie);
+
+        return dtw[n-1][m-1];
+    }
+
     private void classify(double distance, TimeSerie serieT) {
         if (distance < this.distance) {
             this.closestSerie = serieT;

@@ -1,5 +1,6 @@
 package com.company;
 
+import java.sql.Time;
 import java.util.ArrayList;
 
 public class Main {
@@ -17,20 +18,25 @@ public class Main {
         }
         training.trimToSize();
 
+        // Marca o inicio dos testes
+        long startTime = System.currentTimeMillis();
+
         // Processa cada linha do arquivo de teste e contabiliza um acerto ou erro
         while(testFile.hasNextLine()) {
             TimeSerie serieT = testFile.nextSerie();
             total++;
             for (int i = 0; i < training.size(); i++) {
                 // Calcula a dtw e faz a classificacao
-                serieT.dtw(training.get(i));
+                serieT.dtwOptimized(training.get(i), 1);
             }
             // Verifica se a classificacao foi correta e contabiliza os acertos
             if (serieT.isClassificationRight())
                 hits++;
         }
 
+        long elapsedTime = System.currentTimeMillis() - startTime;
+
         // imprime o resultado
-        System.out.print("Total de testes:" + total + "\nAcertos:" + hits + "\nTaxa de acertos:" + (hits*1.0/total*1.0));
+        System.out.print("Total de testes:" + total + "\nAcertos:" + hits + "\nTaxa de acertos:" + (hits*1.0/total*1.0) + "\nTempo decorrido:" + elapsedTime +"ms");
     }
 }
