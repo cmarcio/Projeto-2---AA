@@ -2,6 +2,7 @@ package com.company;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ReadFile {
@@ -27,6 +28,16 @@ public class ReadFile {
             t.addValue(Double.valueOf(lines[i]));
         }
         return t;
+    }
+
+    public ArrayList<TimeSerie> getAllSeries() {
+        ArrayList<TimeSerie> list = new ArrayList<>();
+        while(this.hasNextLine()) {
+            list.add(this.nextSerie());
+        }
+        list.trimToSize();
+
+        return list;
     }
 
     public boolean hasNextLine(){

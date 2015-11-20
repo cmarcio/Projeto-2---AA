@@ -54,11 +54,11 @@ public class TimeSerie {
         return dtw[n-1][m-1];
     }
 
-    public double dtwOptimized(TimeSerie serie, int w){
+    public double dtwOptimized(TimeSerie serie, double band){
         int n = this.values.size();
         int m = serie.values.size();
 
-        w = Math.max(w, Math.abs(n-m)+1); // adapt window size (*)
+        int w = (int) ((Math.abs(n-m)+1) + Math.max(m, n)*band); // adapt window size (*)
 
         double[][] dtw = new double[n][m];
         //int [][] matrix = new int[n][m];
@@ -79,8 +79,13 @@ public class TimeSerie {
         }
 
         /*for(int i = 0; i < n; i++){
-            for(int j = 0; j < m; j++)
-                System.out.print(matrix[i][j]);
+            for(int j = 0; j < m; j++){
+                if (matrix[i][j] == 0)
+                    System.out.print(" * ");
+                else
+                    System.out.print("   ");
+
+            }
             System.out.print("\n");
         }
         System.out.println("--------------------------------------------------------------");*/
