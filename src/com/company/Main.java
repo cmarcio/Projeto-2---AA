@@ -27,7 +27,7 @@ public class Main {
             total++;
             for (int i = 0; i < training.size(); i++) {
                 // Calcula a dtw e faz a classificacao
-                serieT.dtwOptimized(training.get(i), 1);
+                serieT.dtw(training.get(i));
             }
             // Verifica se a classificacao foi correta e contabiliza os acertos
             if (serieT.isClassificationRight())
